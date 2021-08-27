@@ -51,7 +51,7 @@ Plug 'dkarter/bullets.vim'
 Plug 'psliwka/vim-smoothie'
 Plug 'antoinemadec/FixCursorHold.nvim'
 Plug 'wellle/context.vim'
-Plug 'liuchengxu/vim-which-key'
+Plug 'folke/which-key.nvim'
 
 call plug#end()
 
@@ -104,6 +104,12 @@ autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 
 let g:neomake_python_enabled_makers = ['pylint']
 call neomake#configure#automake('nrwi', 500)
+
+"which kye
+lua << EOF
+  require("which-key").setup {
+  }
+EOF
 
 " NERDTree
 let NERDTreeShowHidden=1
@@ -265,7 +271,6 @@ endfunction
 """ Custom Mappings
 
 let mapleader=","
-noremap <leader> <silent> :WhichKey ',' <CR>
 nmap <leader>$s <C-w>s<C-w>j:terminal<CR>:set nonumber<CR><S-a>
 nmap <leader>$v <C-w>v<C-w>l:terminal<CR>:set nonumber<CR><S-a>
 nmap <leader>q :NERDTreeToggle<CR>
