@@ -20,6 +20,8 @@ Plug 'chriskempson/tomorrow-theme', { 'rtp': 'vim' }
 Plug 'rhysd/vim-color-spring-night'
 
 " Functionalities
+Plug 'prabirshrestha/vim-lsp'
+Plug 'mattn/vim-lsp-settings'
 Plug 'ap/vim-buftabline'
 Plug 'vim-syntastic/syntastic'
 Plug 'tpope/vim-fugitive' 
@@ -27,6 +29,7 @@ Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-surround'
 Plug 'davidhalter/jedi-vim'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'lighttiger2505/deoplete-vim-lsp'
 Plug 'liuchengxu/vista.vim'
 Plug 'zchee/deoplete-jedi'
 Plug 'preservim/nerdtree'
@@ -110,6 +113,7 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 " vim-pydocstring
 let g:pydocstring_doq_path = 'C:\Users\Dipto\AppData\Local\nvim\plugged\vim-pydocstring\venv\Scripts\doq'
+let g:pydocstring_formatter = 'numpy'
 
 "vista vim
 function! NearestMethodOrFunction() abort
@@ -176,9 +180,6 @@ let g:indentLine_defaultGroup = 'NonText'
 let g:vim_json_syntax_conceal = 0
 let g:vim_markdown_conceal = 0
 let g:vim_markdown_conceal_code_blocks = 0
-
-" TagBar
-let g:tagbar_width = 30
 
 " fzf-vim
 let g:fzf_action = {
