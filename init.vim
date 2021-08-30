@@ -20,17 +20,17 @@ Plug 'chriskempson/tomorrow-theme', { 'rtp': 'vim' }
 Plug 'rhysd/vim-color-spring-night'
 
 " Functionalities
+Plug 'ap/vim-buftabline'
+Plug 'vim-syntastic/syntastic'
+Plug 'tpope/vim-fugitive' 
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-surround'
 Plug 'davidhalter/jedi-vim'
-Plug 'neomake/neomake'
-Plug 'majutsushi/tagbar'
-Plug 'davidhalter/jedi-vim'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'liuchengxu/vista.vim'
 Plug 'zchee/deoplete-jedi'
 Plug 'preservim/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'sbdchd/neoformat'
 Plug 'ryanoasis/vim-devicons'
 Plug 'scrooloose/nerdcommenter'
 Plug 'mhinz/vim-signify'
@@ -46,7 +46,6 @@ Plug 'chrisbra/Colorizer'
 Plug 'KabbAmine/vCoolor.vim'
 Plug 'heavenshell/vim-pydocstring', { 'do': 'make install' }
 Plug 'vim-scripts/loremipsum'
-Plug 'metakirby5/codi.vim'
 Plug 'dkarter/bullets.vim'
 Plug 'psliwka/vim-smoothie'
 Plug 'antoinemadec/FixCursorHold.nvim'
@@ -102,9 +101,33 @@ set termguicolors
 let g:deoplete#enable_at_startup = 1
 autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 
-let g:neomake_python_enabled_makers = ['pylint']
-call neomake#configure#automake('nrwi', 500)
+"syntastic
+let g:syntastic_python_checkers = ['flake8']
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+" vim-pydocstring
+let g:pydocstring_doq_path = 'C:\Users\Dipto\AppData\Local\nvim\plugged\vim-pydocstring\venv\Scripts\doq'
 
+"vista vim
+function! NearestMethodOrFunction() abort
+  return get(b:, 'vista_nearest_method_or_function', '')
+endfunction
+
+set statusline+=%{NearestMethodOrFunction()}
+
+" By default vista.vim never run if you don't call it explicitly.
+"
+" If you want to show the nearest function in your statusline automatically,
+" you can add the following line to your vimrc
+autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
+
+let g:vista#renderer#enable_icon = 1
+let g:vista_icon_indent = ["╰─▸ ", "├─▸ "]
+let g:vista_default_executive = 'ctags'
+let g:vista_fzf_preview = ['right:50%']
 "which kye
 lua << EOF
   require("which-key").setup {
@@ -120,7 +143,7 @@ autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTr
 let g:airline_powerline_fonts = 1
 let g:airline_section_z = ' %{strftime("%-I:%M %p")}'
 let g:airline_section_warning = ''
-"let g:airline#extensions#tabline#enabled = 1 " Uncomment to display buffer tabline above
+let g:airline#extensions#tabline#enabled = 1 " Uncomment to display buffer tabline above
 
 " Neovim :Terminal
 tmap <Esc> <C-\><C-n>
@@ -128,15 +151,6 @@ tmap <C-w> <Esc><C-w>
 "tmap <C-d> <Esc>:q<CR>
 autocmd BufWinEnter,WinEnter term://* startinsert
 autocmd BufLeave term://* stopinsert
-
-" Enable alignment
-let g:neoformat_basic_format_align = 1
-
-" Enable tab to space conversion
-let g:neoformat_basic_format_retab = 1
-
-" Enable trimmming of trailing whitespace
-let g:neoformat_basic_format_trim = 1
 
 " disable autocompletion, because we use deoplete for completion
 let g:jedi#completions_enabled = 0
@@ -146,9 +160,7 @@ let g:jedi#use_splits_not_buffers = "right"
 let g:python3_host_prog = 'python'
 inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 
-set timeoutlen=500
-" vim-pydocstring
-let g:pydocstring_doq_path = 'C:\Users\Dipto\AppData\Local\Programs\Python\Python39\Doc'
+set timeoutlen=1000
 
 " Supertab
 let g:SuperTabDefaultCompletionType = "<C-n>"
@@ -273,9 +285,10 @@ endfunction
 let mapleader=","
 nmap <leader>$s <C-w>s<C-w>j:terminal<CR>:set nonumber<CR><S-a>
 nmap <leader>$v <C-w>v<C-w>l:terminal<CR>:set nonumber<CR><S-a>
-nmap <leader>q :NERDTreeToggle<CR>
-nmap \\ <leader>q
-nmap <leader>w :TagbarToggle<CR>
+nmap <leader>qt :NERDTreeToggle<CR>
+nmap \\ <leader>qt
+nmap <leader>w :Vista!!<CR>
+nmap <leader>V :Vista<CR>
 nmap \| <leader>w
 nmap <leader>ee :Colors<CR>
 nmap <leader>ea :AirlineTheme<CR> 
@@ -283,7 +296,7 @@ nmap <leader>e1 :call ColorDracula()<CR>
 nmap <leader>e2 :call ColorSeoul256()<CR>
 nmap <leader>e3 :call ColorForgotten()<CR>
 nmap <leader>e4 :call ColorZazen()<CR>
-nmap <leader>r :so ~/AppData/Local/nvim/init.vim<CR>
+nmap <leader>r :exe 'edit '.stdpath('config').'/init.vim'<CR>
 nmap <leader>t :call TrimWhitespace()<CR>
 nmap <leader>p <Plug>(pydocstring)
 xmap <leader>a gaip*
@@ -296,6 +309,7 @@ nmap <leader>h :RainbowParentheses!!<CR>
 nmap <leader>j :set filetype=journal<CR>
 nmap <leader>k :ColorToggle<CR>
 nmap <leader>l :Limelight!!<CR>
+nmap <leader>qf :NERDTreeFocus<CR>
 xmap <leader>l :Limelight!!<CR>
 imap jj <ESC>
 autocmd FileType python nmap <leader>x :0,$!python -m yapf<CR>
