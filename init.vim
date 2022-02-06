@@ -20,6 +20,7 @@ Plug 'chriskempson/tomorrow-theme', { 'rtp': 'vim' }
 Plug 'rhysd/vim-color-spring-night'
 
 " Functionalities
+Plug 'wellle/context.vim'
 Plug 'ap/vim-buftabline'
 Plug 'vim-syntastic/syntastic'
 Plug 'tpope/vim-fugitive' 
