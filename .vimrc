@@ -11,6 +11,7 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'rafamadriz/friendly-snippets'
 Plug 'preservim/nerdcommenter'
 Plug 'liuchengxu/vista.vim'
+Plug 'mhinz/vim-signify'
 
 "Color 
 Plug 'drewtempelmeyer/palenight.vim'
@@ -50,6 +51,7 @@ set encoding=utf-8
 set fileencoding=utf-8
 set fileencodings=utf-8
 set ttyfast
+set updatetime=100
 
 "" Fix backspace indent
 set backspace=indent,eol,start
