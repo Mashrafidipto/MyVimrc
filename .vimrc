@@ -1,34 +1,45 @@
 call plug#begin('~/.vim/plugged')
 
+"Utils
 Plug 'wellle/context.vim'
-Plug 'drewtempelmeyer/palenight.vim'
-Plug 'ryanoasis/vim-devicons'
-Plug 'sbdchd/neoformat'
-Plug 'hrsh7th/vim-vsnip'
-Plug 'hrsh7th/vim-vsnip-integ'
-Plug 'sheerun/vim-polyglot'
 Plug 'liuchengxu/vim-which-key'
 Plug 'voldikss/vim-floaterm'
 Plug 'mhinz/vim-startify'
 Plug 'machakann/vim-highlightedyank'
 Plug 'mengelbrecht/lightline-bufferline'
 Plug 'jiangmiao/auto-pairs'
-Plug 'prabirshrestha/vim-lsp'
-Plug 'mattn/vim-lsp-settings'
+Plug 'rafamadriz/friendly-snippets'
+Plug 'preservim/nerdcommenter'
+Plug 'liuchengxu/vista.vim'
+
+"Color 
+Plug 'drewtempelmeyer/palenight.vim'
+Plug 'ryanoasis/vim-devicons'
+Plug 'luochen1990/rainbow'
+
+"Formate
+Plug 'sbdchd/neoformat'
+
+"Snip
+Plug 'hrsh7th/vim-vsnip'
+Plug 'hrsh7th/vim-vsnip-integ'
+
+"Syntax
+Plug 'sheerun/vim-polyglot'
 Plug 'Yggdroot/indentLine'
-Plug 'sainnhe/gruvbox-material'
 Plug 'scrooloose/nerdtree'
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'itchyny/lightline.vim'
 Plug 'cespare/vim-toml'
+
+"Lsp and completinon
 Plug 'prabirshrestha/vim-lsp'
+Plug 'prabirshrestha/vim-lsp'
+Plug 'mattn/vim-lsp-settings'
 Plug 'mattn/vim-lsp-settings'
 Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'prabirshrestha/asyncomplete-lsp.vim'
-Plug 'luochen1990/rainbow'
-Plug 'rafamadriz/friendly-snippets'
-Plug 'preservim/nerdcommenter'
-Plug 'liuchengxu/vista.vim'
+Plug 'prabirshrestha/asyncomplete-file.vim'
 
 call plug#end()
 
@@ -50,8 +61,7 @@ set shiftwidth=4
 set expandtab
 
 "" Map leader to,
-let mapleader=','
-
+let mapleader=' '
 
 "" Enable hidden buffers
 set hidden
@@ -170,7 +180,15 @@ function! LightlineFilename()
 endfunction
 
 "Which kye
-nnoremap <silent> <leader> :WhichKey ','<CR>
+nnoremap <silent> <leader> :WhichKey ' '<CR>
+
+"asyncomplete
+au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
+    \ 'name': 'file',
+    \ 'allowlist': ['*'],
+    \ 'priority': 10,
+    \ 'completor': function('asyncomplete#sources#file#completor')
+    \ }))
 
 "Bracktes
 let g:rainbow_active = 1
@@ -189,8 +207,8 @@ tnoremap <silent> <Leader>ft <C-\><C-n>:FloatermToggle<CR>
 "Mappings
 nnoremap <Leader>tf :Vista<CR>
 nnoremap <Leader>tc :Vista!!<CR>
-nnoremap <TAB> :bn<CR>
-nnoremap <S-TAB> :bp<CR>
-nnoremap <Leader>nt :NERDTreeToggle<CR>
-nnoremap <Leader>nf :NERDTreeFocus<CR>
+nnoremap <S-l> :bn<CR>
+"nnoremap <S-h> :bp<CR>
+nnoremap <Leader>l :NERDTreeToggle<CR>
+nnoremap <Leader>h :NERDTreeFocus<CR>
 inoremap jj <ESC>
